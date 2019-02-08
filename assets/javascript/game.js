@@ -1,6 +1,6 @@
 
 
-var list = [        //Word list: 16 words
+var list = [        //Word list: 21 words
     "helado",
     "pastel",
     "queso",
@@ -34,7 +34,6 @@ var wins = 0;               // How many wins earned
 // Reset variables
 
 function resetGame() {
-    console.log ('reset game');
     currentWordIndex = Math.floor(Math.random() * (list.length));
     guessedLetters = [];
     guessingWord = [];
@@ -44,11 +43,6 @@ function resetGame() {
         guessingWord.push(" _ ");
     }
 
-    /*
-    document.getElementById("tryAgain").style.cssText = "display: none";   // Hide gameover and win text
-    document.getElementById("gameover").style.cssText = "display: none";
-    document.getElementById("youwin").style.cssText = "display: none";
-*/
     updateDisplay();
 
 }; //ends reset
@@ -56,7 +50,7 @@ function resetGame() {
 resetGame();
 
 function updateDisplay()    {  
-    console.log ('update display');                                             // Updates the display on the HTML 
+                                                                     // Updates the display on the HTML 
     document.getElementById("totalWins").innerText = wins;
     document.getElementById("currentWord").innerText = "";
     for (var i = 0; i < guessingWord.length; i++) {
@@ -69,23 +63,16 @@ function updateDisplay()    {
         document.getElementById("gameover").style.cssText = "display: block";
         document.getElementById("tryAgain").style.cssText = "display:block";
         resetGame();
-    //    hasFinished = true;
     }
 
 }; //ends update display
 
 document.onkeyup = function(event) {
-    console.log ('pressed key');
     document.getElementById("tryAgain").style.cssText = "display: none";   
     document.getElementById("gameover").style.cssText = "display: none";
     document.getElementById("youwin").style.cssText = "display: none";
-  /*
-    if (hasFinished)  {
-        resetGame();
-        hasFinished = false;
-    }
-    else { 
-     */                                                    // Checking to make sure A-Z was pressed.
+ 
+    // Checking to make sure A-Z was pressed.
         if(event.keyCode >= 65 && event.keyCode <= 90) {
             makeGuess(event.key.toLowerCase());
    //     }
@@ -94,17 +81,9 @@ document.onkeyup = function(event) {
 }; // ends onkey
 
 function makeGuess(letter) {
-    console.log ('make guess , letter, ', letter);
     if (remainingGuesses > 0) {
-        console.log ('remaining guesses ', remainingGuesses);
-     /*
-        if(!gameStarted) {
-            console.log ('game is started');
-            gameStarted = true;
-        }
-      */  
+     
         if (guessedLetters.indexOf(letter) === -1) {            // Make sure we didn't use this letter yet
-        console.log ('guessed letter pushed');
             guessedLetters.push(letter);
             evaluateGuess(letter);
             console.log ('guess has been evaluated');        }
@@ -125,7 +104,6 @@ function evaluateGuess(letter) {
     for (var i = 0; i < list[currentWordIndex].length; i++) {
         if(list[currentWordIndex][i] === letter) {
             positions.push(i);
-            console.log("current word index pushed ", positions);
         }
     }
     // if there are no indicies, remove a guess 
@@ -136,7 +114,6 @@ function evaluateGuess(letter) {
         // Loop through all the indicies and replace the '_' with a letter.
         for(var i = 0; i < positions.length; i++) {
             guessingWord[positions[i]] = letter;
-            console.log ('guessing word ', guessingWord);
         }
     }
 };
@@ -148,14 +125,10 @@ function checkWin() {
        };
     };  
      if (blanks != 1) {  
-        console.log ('else is running, wins ', wins);   
         document.getElementById("youwin").style.cssText = "display: block";
         document.getElementById("tryAgain").style.cssText= "display: block";
         wins++;
         resetGame();
-     /*  document.getElementById("tryAgain").style.cssText = "display: none";   
-        document.getElementById("gameover").style.cssText = "display: none";
-        document.getElementById("youwin").style.cssText = "display: none"; */
        }; 
       
 }; // ends checkWin
