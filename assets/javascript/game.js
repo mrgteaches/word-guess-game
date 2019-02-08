@@ -17,6 +17,11 @@ var list = [        //Word list: 16 words
     "ensalada",
     "cebolla",
     "papa",
+    "salchichas",
+    "sal",
+    "pimienta",
+    "frutas",
+    "zanahoria",
 ];
 
 
@@ -33,6 +38,7 @@ function resetGame() {
     currentWordIndex = Math.floor(Math.random() * (list.length));
     guessedLetters = [];
     guessingWord = [];
+    remainingGuesses = 10;
 
     for (var i = 0; i < list[currentWordIndex].length; i++) {
         guessingWord.push(" _ ");
@@ -62,13 +68,17 @@ function updateDisplay()    {
     if(remainingGuesses <= 0) {
         document.getElementById("gameover").style.cssText = "display: block";
         document.getElementById("tryAgain").style.cssText = "display:block";
-        hasFinished = true;
+        resetGame();
+    //    hasFinished = true;
     }
 
 }; //ends update display
 
 document.onkeyup = function(event) {
     console.log ('pressed key');
+    document.getElementById("tryAgain").style.cssText = "display: none";   
+    document.getElementById("gameover").style.cssText = "display: none";
+    document.getElementById("youwin").style.cssText = "display: none";
   /*
     if (hasFinished)  {
         resetGame();
@@ -102,6 +112,7 @@ function makeGuess(letter) {
     
     checkWin();
     updateDisplay();
+
 }; //ends makeGuess
 
  // This function takes a letter and finds all instances of 
@@ -141,5 +152,10 @@ function checkWin() {
         document.getElementById("youwin").style.cssText = "display: block";
         document.getElementById("tryAgain").style.cssText= "display: block";
         wins++;
+        resetGame();
+     /*  document.getElementById("tryAgain").style.cssText = "display: none";   
+        document.getElementById("gameover").style.cssText = "display: none";
+        document.getElementById("youwin").style.cssText = "display: none"; */
        }; 
+      
 }; // ends checkWin
